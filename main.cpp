@@ -57,16 +57,20 @@ int main() {
 
     std::string errStr;
     llvm::ExecutionEngine *EE = llvm::EngineBuilder(std::move(llvmOwner))
-                    .setErrorStr(&errStr)
-                    .create();
+            .setErrorStr(&errStr)
+            .create();
 
     if (!EE) {
         std::cout << "Cannot create ExecutionEngine " << errStr << std::endl;
         return 1;
     }
 
-    if (llvm::verifyModule(*llvmModule)) {
+    std::string type_str;
+    llvm::raw_string_ostream verifyError(type_str);
+
+    if (llvm::verifyModule(*llvmModule, &verifyError)) {
         std::cout << "Cannot verify LLVM Module" << std::endl;
+        std::cout << verifyError.str() << std::endl;
         return 1;
     }
 
