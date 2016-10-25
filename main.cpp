@@ -92,9 +92,18 @@ int main() {
     codeIRStream << *llvmModule;
     std::cout << codeIRStream.str() << std::endl;
 
+    /**
+     * function rand() { // what return?
+     *  return; // return nothing is not allowed in LLVM?
+     * }
+     */
+
+    auto statements = std::vector<HLVM::AST::Node>();
+    statements.push_back(HLVM::AST::Statement::Return());
+
     auto astFunction = HLVM::AST::Statement::Function(
         "rand",
-        std::vector<HLVM::AST::Node>()
+        statements
     );
 
     return 0;

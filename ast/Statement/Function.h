@@ -7,7 +7,7 @@
 #include "./../Node.h"
 
 namespace HLVM { namespace AST { namespace Statement {
-    class Function {
+    class Function : public HLVM::AST::Node {
     protected:
         std::string name;
         std::vector<HLVM::AST::Node> statements;
