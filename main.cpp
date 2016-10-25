@@ -21,6 +21,10 @@
 #include <string>
 #include <algorithm>
 
+// y own library with ast and this file for all classes
+#include "ast.h"
+#include "ast/Statement/Function.h"
+
 llvm::Function *createSimpleStrLenFunction(llvm::Module *llvmModule, llvm::LLVMContext &llvmContext) {
     llvm::Function *functionPointer = llvm::cast<llvm::Function>(
         llvmModule->getOrInsertFunction(
@@ -87,6 +91,11 @@ int main() {
 
     codeIRStream << *llvmModule;
     std::cout << codeIRStream.str() << std::endl;
+
+    auto astFunction = HLVM::AST::Statement::Function(
+        "rand",
+        std::vector<HLVM::AST::Node>()
+    );
 
     return 0;
 }

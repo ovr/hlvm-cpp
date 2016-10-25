@@ -50,8 +50,10 @@ message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
 include_directories(${LLVM_INCLUDE_DIRS})
 add_definitions(${LLVM_DEFINITIONS} -std=c++11)
 
-set(SOURCE_FILES main.cpp)
+add_subdirectory(ast)
+
+set(SOURCE_FILES main.cpp ast.h)
 add_executable(llvm_simple_generator ${SOURCE_FILES})
 
 llvm_map_components_to_libnames(llvm_libs mcjit x86codegen interpreter executionengine)
-target_link_libraries(llvm_simple_generator ${llvm_libs})
+target_link_libraries(llvm_simple_generator ast ${llvm_libs})
