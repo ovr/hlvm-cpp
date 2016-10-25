@@ -34,12 +34,10 @@ llvm::Function *createSimpleStrLenFunction(llvm::Module *llvmModule, llvm::LLVMC
 
     llvm::Function::arg_iterator argumentsIterator = functionPointer->arg_begin();
     argumentsIterator->setName("Argument1");
-
-
-    auto *argumentValuePointer = llvm::ConstantInt::get(llvm::Type::getInt32Ty(llvmContext), 1);
+    llvm::Value *argument1 = llvm::cast<llvm::Value>(argumentsIterator++); // Black magic box, with casting
 
     llvm::BasicBlock *returnBasicBlock = llvm::BasicBlock::Create(llvmContext, "return", functionPointer);
-    llvm::ReturnInst::Create(llvmContext, argumentValuePointer, returnBasicBlock);
+    llvm::ReturnInst::Create(llvmContext, argument1, returnBasicBlock);
 
     return functionPointer;
 }
