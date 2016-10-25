@@ -82,7 +82,13 @@ int main() {
 
     std::cout << "Result " << result.IntVal.toString(10, true) << std::endl;
 
-    llvmModule->dump();
+    std::cout << std::endl << "IR Code" << std::endl;
+
+    std::string codeIR;
+    llvm::raw_string_ostream codeIRStream(codeIR);
+
+    codeIRStream << *llvmModule;
+    std::cout << codeIRStream.str() << std::endl;
 
     return 0;
 }
